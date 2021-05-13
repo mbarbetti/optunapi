@@ -7,15 +7,16 @@ def suggest_from_config (trial: Trial, configuration: str):
   Suggest From Config
   ===================
 
-  ...
+  Allows to generalize the `suggest_*` functions taking 
+  information from a YAML configuration file.
 
   Parameters
   ----------
-    trial : ...
-      ...
+    trial : optuna.trial.Trial
+      Trial object deriving from an Ask-and-Tell interface.
 
-    configuration : ...
-      ...
+    configuration : str
+      YAML file containing hyperparameters configuration.
 
   Returns
   -------
@@ -43,7 +44,7 @@ def suggest_from_config (trial: Trial, configuration: str):
                           name = par [ 'name' ] ,
                           low  = par [ 'low'  ] ,
                           high = par [ 'high' ] ,
-                          step = par [ 'step' ] if par [ 'step' ] else None  ,
+                          step = par [ 'step' ] if par [ 'step' ] else 1     ,
                           log  = par [ 'log'  ] if par [ 'log'  ] else False ,
                         )
     else:
