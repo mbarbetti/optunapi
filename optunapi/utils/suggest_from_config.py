@@ -28,24 +28,24 @@ def suggest_from_config (trial: Trial, configuration: str):
   for par in params.values():
     if par['type'] == 'categorical':
       trial.suggest_categorical (
-                                  name    = par [ 'name'    ] ,
-                                  choices = par [ 'choices' ] ,
+                                  name    = str  ( par [ 'name'    ] ) ,
+                                  choices = list ( par [ 'choices' ] ) ,
                                 )
     elif par['type'] == 'float':
       trial.suggest_float (
-                            name = par [ 'name' ] ,
-                            low  = par [ 'low'  ] ,
-                            high = par [ 'high' ] ,
-                            step = par [ 'step' ] if par [ 'step' ] else None  ,
-                            log  = par [ 'log'  ] if par [ 'log'  ] else False ,
+                            name = str   ( par [ 'name' ] ) ,
+                            low  = float ( par [ 'low'  ] ) ,
+                            high = float ( par [ 'high' ] ) ,
+                            step = float ( par [ 'step' ] ) if par [ 'step' ] else None  ,
+                            log  = bool  ( par [ 'log'  ] ) if par [ 'log'  ] else False ,
                           )
     elif par['type'] == 'int':
       trial.suggest_int (
-                          name = par [ 'name' ] ,
-                          low  = par [ 'low'  ] ,
-                          high = par [ 'high' ] ,
-                          step = par [ 'step' ] if par [ 'step' ] else 1     ,
-                          log  = par [ 'log'  ] if par [ 'log'  ] else False ,
+                          name = str  ( par [ 'name' ] ) ,
+                          low  = int  ( par [ 'low'  ] ) ,
+                          high = int  ( par [ 'high' ] ) ,
+                          step = int  ( par [ 'step' ] ) if par [ 'step' ] else 1     ,
+                          log  = bool ( par [ 'log'  ] ) if par [ 'log'  ] else False ,
                         )
     else:
       raise ValueError ('Trial suggestion not implemented.')
