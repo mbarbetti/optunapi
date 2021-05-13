@@ -7,13 +7,16 @@ from optuna.trial._state import TrialState
 from fastapi import FastAPI
 from typing  import Optional
 
-from utils import suggest_from_config
+from utils import suggest_from_config, create_log_file
 
 
 
 optunapi = FastAPI()
 
 
+##########################
+##  Read hyperparameters
+##########################
 @optunapi.get ('/optunapi/hparams/{model_name}')
 async def read_hparams (model_name: str):
   study_name = os.path.join (PATH, 'db', model_name)
@@ -25,13 +28,12 @@ async def read_hparams (model_name: str):
                               )
   
   trial = study.ask()
+
   config_file = '{}/config/{}.yaml' . format (PATH, model_name)
   suggest_from_config (trial, configuration = config_file)
 
-  df = study.trials_dataframe ( attrs = ('number', 'params', 'value', 'state') )
   log_file = '{}/log/{}.log' . format (PATH, model_name)
-  with open (log_file, 'w') as file:
-    print (df.to_string(), file = file)
+  create_log_file (study, log_file = log_file)
 
   trial_id = study.trials[-1].number
   params   = study.trials[-1].params
@@ -51,6 +53,9 @@ async def read_hparams (model_name: str):
   return response
 
 
+################
+##  Send score
+################
 @optunapi.get ('/optunapi/score/{model_name}')
 async def send_score (
                        model_name : str            ,
@@ -68,10 +73,8 @@ async def send_score (
 
   study.tell (trial_id, score)
 
-  df = study.trials_dataframe ( attrs = ('number', 'params', 'value', 'state') )
   log_file = '{}/log/{}.log' . format (PATH, model_name)
-  with open (log_file, 'w') as file:
-    print (df.to_string(), file = file)
+  create_log_file (study, log_file = log_file)
 
   params = study.trials[trial_id].params
   best_trial  = study.best_trial.number
