@@ -13,7 +13,7 @@ def suggest_from_config (trial: Trial, configuration: str):
   Parameters
   ----------
     trial : optuna.trial.Trial
-      Trial object deriving from an Ask-and-Tell interface.
+      `Trial` object deriving from an Ask-and-Tell interface.
 
     configuration : str
       YAML file containing hyperparameters configuration.
