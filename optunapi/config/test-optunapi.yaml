@@ -1,0 +1,17 @@
+x :
+  name    : x
+  type    : float
+  choices : 
+  low     : -10
+  high    :  10
+  step    :
+  log     : False
+
+y :
+  name    : y
+  type    : float
+  choices :
+  low     : -10
+  high    :  10
+  step    :
+  log     : False
