@@ -1,3 +1,4 @@
 *.db
+*.log
 .vscode/
 __pycache__/
