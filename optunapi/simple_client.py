@@ -3,10 +3,11 @@ import requests
 
 
 HOST = 'http://127.0.0.1:8000'
+model_name = 'test-optunapi'
 
 num_trials = 10
 for _ in range (num_trials):
-  read_hparams = requests.get (HOST + '/optunapi/hparams/test-optunapi')
+  read_hparams = requests.get (HOST + '/optunapi/hparams/{}' . format (model_name))
   hp_resp = read_hparams.json()
 
   model_name = hp_resp [ 'model_name' ]
@@ -23,7 +24,7 @@ for _ in range (num_trials):
   y = params [ 'y' ]
   func = (x - 2) ** 2 + (y - 3) ** 2
 
-  send_score = requests.get (HOST + '/optunapi/score/{}/?trial_id={}&score={}' . format (model_name, trial_id, func))
+  send_score = requests.get (HOST + '/optunapi/score/{}?trial_id={}&score={}' . format (model_name, trial_id, func))
   score_resp = send_score.json()
   
   model_name  = score_resp [ 'model_name'  ]
