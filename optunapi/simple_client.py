@@ -39,7 +39,7 @@ for _ in range (num_trials):
 
   print (
     'Trial {} finished with value: {}. Best is trial {} with value: {} and parameters: {}. Total number of completed trials: {}.\n' \
-    . format ( trial_id, score, best_trial, best_score, best_score, completed_trials )
+    . format ( trial_id, score, best_trial, best_score, best_params, completed_trials )
         )
 
 print ( '\nRESULT AFTER {} TRIALS' . format (completed_trials) )
