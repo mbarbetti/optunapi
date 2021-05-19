@@ -41,11 +41,11 @@ def suggest_from_config (trial: Trial, configuration: str):
                           )
     elif par['type'] == 'int':
       trial.suggest_int (
-                          name = str  ( par [ 'name' ] ) ,
-                          low  = int  ( par [ 'low'  ] ) ,
-                          high = int  ( par [ 'high' ] ) ,
-                          step = int  ( par [ 'step' ] ) if par [ 'step' ] else 1     ,
-                          log  = bool ( par [ 'log'  ] ) if par [ 'log'  ] else False ,
+                          name = str   ( par [ 'name' ] ) ,
+                          low  = float ( par [ 'low'  ] ) ,
+                          high = float ( par [ 'high' ] ) ,
+                          step = float ( par [ 'step' ] ) if par [ 'step' ] else 1     ,
+                          log  = bool  ( par [ 'log'  ] ) if par [ 'log'  ] else False ,
                         )
     else:
       raise ValueError ('Trial suggestion not implemented.')
