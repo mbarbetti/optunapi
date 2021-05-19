@@ -3,7 +3,7 @@ import requests
 
 
 HOST = 'http://127.0.0.1:8000'
-model_name = 'test-optunapi'
+model_name = 'optunapi-test'
 
 num_trials = 10
 for _ in range (num_trials):
