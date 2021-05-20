@@ -12,6 +12,6 @@ batch_size:
   type    : int
   choices : 
   low     : 1
-  high    : 1e4
+  high    : 2500
   step    :
   log     : True
