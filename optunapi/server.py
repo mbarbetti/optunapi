@@ -12,6 +12,12 @@ from utils  import suggest_from_config, create_log_file
 
 
 
+@optunapi.get ('/optunapi/ping')
+async def ping_server():
+  msg = 'The Optuna-server is alive!'
+  return msg
+
+
 ##########################
 ##  Read hyperparameters
 ##########################
