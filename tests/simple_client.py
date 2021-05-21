@@ -1,4 +1,3 @@
-import optuna
 import requests
 
 
@@ -10,7 +9,6 @@ for _ in range (num_trials):
   read_hparams = requests.get (HOST + '/optunapi/hparams/{}' . format (model_name))
   hp_resp = read_hparams.json()
 
-  model_name = hp_resp [ 'model_name' ]
   trial_id   = hp_resp [ 'trial_id'   ]
   params     = hp_resp [ 'params'     ]
   running_trials = hp_resp [ 'running_trials' ]
@@ -27,14 +25,11 @@ for _ in range (num_trials):
   send_score = requests.get (HOST + '/optunapi/score/{}?trial_id={}&score={}' . format (model_name, trial_id, func))
   score_resp = send_score.json()
   
-  model_name  = score_resp [ 'model_name'  ]
   trial_id    = score_resp [ 'trial_id'    ]
-  params      = score_resp [ 'params'      ]
   score       = score_resp [ 'score'       ]
-  step        = score_resp [ 'step'        ]
   best_trial  = score_resp [ 'best_trial'  ]
-  best_params = score_resp [ 'best_params' ]
   best_score  = score_resp [ 'best_score'  ]
+  best_params = score_resp [ 'best_params' ]
   completed_trials = score_resp [ 'completed_trials' ]
 
   print (
