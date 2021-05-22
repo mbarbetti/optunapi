@@ -46,9 +46,46 @@ starts a new study ([`create_study()`](https://optuna.readthedocs.io/en/stable/r
 to the same optimization session don't initialize a new study, but recover the previous one ([`load_study()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.load_study.html#optuna.study.load_study)) contributing 
 to mapping the hyperparameters space.
 
----
+A _trial_ allows to prepare a particular set of hyperparameters and evaluate its capability of optimizing a target
+function, not necessarily available in an explicit form as in the case of very complex Machine Learning algorithms.
+This object provides the following interfaces to get parameter suggestion: 
 
-A trial is a process of evaluating an objective function. This object is passed to an objective function and provides interfaces to get parameter suggestion, manage the trial’s state, and set/get user-defined attributes of the trial.
+- [`optuna.trial.Trial.suggest_categorical()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_categorical) for categorical parameters
+- [`optuna.trial.Trial.suggest_int()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_int) for integer parameters
+- [`optuna.trial.Trial.suggest_float()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial.suggest_float) for floating point parameters
+
+With optional arguments of `step` and `log`, we can discretize or take the logarithm of integer and floating point parameters.
+The following code block is taken from the [Optuna tutorial](https://optuna.readthedocs.io/en/stable/tutorial/10_key_features/002_configurations.html) and shows a standard use of these features:
+
+```Python
+import optuna
+
+
+def objective (trial):
+    # Categorical parameter
+    optimizer = trial.suggest_categorical ('optimizer', ['RMSprop', 'Adam'])
+
+    # Integer parameter
+    num_layers = trial.suggest_int ('num_layers', 1, 3)
+
+    # Integer parameter (log)
+    num_channels = trial.suggest_int ('num_channels', 32, 512, log = True)
+
+    # Integer parameter (discretized)
+    num_units = trial.suggest_int ('num_units', 10, 100, step = 5)
+
+    # Floating point parameter
+    dropout_rate = trial.suggest_float ('dropout_rate', 0.0, 1.0)
+
+    # Floating point parameter (log)
+    learning_rate = trial.suggest_float ('learning_rate', 1e-5, 1e-2, log = True)
+
+    # Floating point parameter (discretized)
+    drop_path_rate = trial.suggest_float ('drop_path_rate', 0.0, 1.0, step = 0.1)
+```
+
+OptunAPI uses these methods internally and requires only a [configuration file](#configuration-file) 
+correctly filled to run the studies.
 
 ### Ask-and-Tell Interface
 
