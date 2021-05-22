@@ -1,14 +1,12 @@
 # OptunAPI
 
-OptunAPI is a simple API designed for Machine Learning applications that allows 
-to distribute an automatic hyperparameters optimization over different machines 
-through _HTTP requests_. Each set of hyperparameters can be studied independently 
-since the minima research does't require any gradients computation, but instead 
-is performed through a _Bayesian optimization_ based on [Optuna](https://optuna.org/).
-The machine running Optuna manages centrally the optimization studies (_Optuna-server_)
-providing sets of hyperparameters and assessing them by the scores evaluated and
-sent back by the single computing instance (_Trainer-client_). The HTTP requests
-underlying such client-server system are powered by [FastAPI](https://fastapi.tiangolo.com).
+OptunAPI is a simple API designed for Machine Learning applications that allows to distribute an automatic 
+hyperparameters optimization over different machines through _HTTP requests_. Each set of hyperparameters 
+can be studied independently since the minima research does't require any gradients computation, but instead 
+is performed through a _Bayesian optimization_ based on [Optuna](https://optuna.org/). The machine running 
+Optuna manages centrally the optimization studies (_Optuna-server_) providing sets of hyperparameters and 
+assessing them by the scores evaluated and sent back by the single computing instance (_Trainer-client_). 
+The HTTP requests underlying such client-server system are powered by [FastAPI](https://fastapi.tiangolo.com).
 
 ## Key Features
 
@@ -34,7 +32,7 @@ To understand how OptunAPI works, we need to spend a couple of words about its c
 - [`Study`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study) and
   [`Trial`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial) objects
   from Optuna
-- Optuna's _Ask-and-Tell_ interface
+- Optuna's Ask-and-Tell interface
 - HTTP requests to map the hyperparameters space
 
 ### Study and Trial
@@ -46,7 +44,7 @@ starts a new study ([`create_study()`](https://optuna.readthedocs.io/en/stable/r
 to the same optimization session don't initialize a new study, but recover the previous one ([`load_study()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.load_study.html#optuna.study.load_study)) contributing 
 to mapping the hyperparameters space.
 
-A _trial_ allows to prepare a particular set of hyperparameters and evaluate its capability of optimizing a target
+A _trial_ allows to prepare a particular set of hyperparameters and evaluate its capability of optimizing a objective
 function, not necessarily available in an explicit form as in the case of very complex Machine Learning algorithms.
 This object provides the following interfaces to get parameter suggestion: 
 
@@ -59,7 +57,6 @@ The following code block is taken from the [Optuna tutorial](https://optuna.read
 
 ```Python
 import optuna
-
 
 def objective (trial):
     # Categorical parameter
@@ -89,7 +86,16 @@ correctly filled to run the studies.
 
 ### Ask-and-Tell Interface
 
-bla bla bla
+The Optuna's _Ask-and-Tell_ interface provides a more flexible interface for hyperparameter optimization
+based on the two following methods:
+
+- [`optuna.study.Study.ask()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.ask) creates a trial that can sample hyperparameters
+- [`optuna.study.Study.tell()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study.tell) finishes the trial by passing `trial` and an objective value
+
+OptunAPI uses these methods in two different moments. When a machine ask for a set of hyperparameters,
+that set belongs to a trial resulting from an _ask_ instance. Then, once the objective function was
+evaluated with that particular set of hyperparameters, the machine sends a new request encoding the
+objective value allowing to close the corresponding trial with a _tell_ instance.
 
 ### HTTP Requests
 
