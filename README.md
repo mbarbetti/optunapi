@@ -108,7 +108,7 @@ equipped with a set of _path operation functions_ relying on the FastAPI ecosyst
   - the _operation_ is `GET`
   - the _function_ allows to verify if the server is running
 - `read_hparams`
-  - the _path_ is `/optuna/hparams/{model_name}`
+  - the _path_ is `/optuna/hparams/{model_name}` (`model_name` is a _path parameter_)
   - the _operation_ is `GET`
   - the _function_ allows to start (or load) an Optuna study and send sets of hyperparameters
 - `send_score`
@@ -127,7 +127,7 @@ OptunAPI is based on two modern and highly performant frameworks:
 
 ## Installation
 
-bla bla bla
+OptunAPI is a public repository on [GitHub](https://github.com/).
 
 <div class="termy">
 
@@ -139,7 +139,7 @@ $ git clone https://github.com/mbarbetti/optunapi.git
 
 </div>
 
-bla bla bla
+To run and use OptunAPI we should create a virtual environment with Python 3.6+ and install Optuna and FastAPI.
 
 <div class="termy">
 
