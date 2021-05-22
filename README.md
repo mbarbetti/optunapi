@@ -99,7 +99,22 @@ objective value allowing to close the corresponding trial with a _tell_ instance
 
 ### HTTP Requests
 
-bla bla bla
+OptunAPI provides a simple Python module to run a server able to centrally manage the optimization studies:
+[`optuna/optuna/server.py`](https://github.com/mbarbetti/optunapi/blob/main/optunapi/server.py). It is
+equipped with a set of _path operation functions_ relying on the FastAPI ecosystem:
+
+- `ping_server`
+  - the _path_ is `/optunapi/ping`
+  - the _operation_ is `GET`
+  - the _function_ allows to verify if the server is running
+- `read_hparams`
+  - the _path_ is `/optuna/hparams/{model_name}`
+  - the _operation_ is `GET`
+  - the _function_ allows to start (or load) an Optuna study and send sets of hyperparameters
+- `send_score`
+  - the _path_ is `/optuna/score/{model_name}?trail_id=TRIAL_ID&score=SCORE`
+  - the _operation_ is `GET`
+  - the _function_ allows to finish the trial identified by `trial_id` with the `score` value
 
 ## Requirements
 
