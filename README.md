@@ -19,9 +19,9 @@ OptunAPI inherits most of the modern functionalities of Optuna and FastAPI:
 - **Easy to configure**
   - For hyperparameters sampling, OptunAPI relies on [configuration files](#configuration-file) easy to set up.
 - **Easy to integrate**
-  - The sets of hyperparameters can be easily recover [decoding the content of the HTTP response](#trainer-client) from the server.
+  - The hyperparameters values can be easily recover [decoding the HTTP response content](#trainer-client) from the server.
 - **Easy parallelization**
-  - An unlimited number of machines can run the hyperparameters study in parallel, centrally coordinated by the server.
+  - Different machines can straightforwardly run the hyperparameters study in parallel, centrally coordinated by the server.
 - **Efficient optimization algorithms**
   - Optuna enables efficient hyperparameter optimization by adopting state-of-the-art algorithms for sampling hyperparameters.
 - **Quick visualization for study analysis**
