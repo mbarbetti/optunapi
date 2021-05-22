@@ -127,7 +127,7 @@ OptunAPI is based on two modern and highly performant frameworks:
 
 ## Installation
 
-OptunAPI is a public repository on [GitHub](https://github.com/).
+OptunAPI is a [public repository](https://github.com/mbarbetti/optunapi) on GitHub.
 
 <div class="termy">
 
@@ -169,6 +169,26 @@ $ pip install uvicorn[standard]
 
 ### Configuration file
 
+```YAML
+x :
+  name    : x
+  type    : float
+  choices : 
+  low     : -10
+  high    :  10
+  step    :
+  log     : False
+
+y :
+  name    : y
+  type    : float
+  choices :
+  low     : -10
+  high    :  10
+  step    :
+  log     : False
+```
+
 ### Optuna-server
 
 Run the server with:
@@ -202,26 +222,51 @@ The command `uvicorn server:optunapi` refers to:
 This is a simple example:
 
 ```Python
-from typing import Optional
-
-from fastapi import FastAPI
-
-app = FastAPI()
+import requests
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+HOST = 'http://127.0.0.1:8000'
+model_name = 'optunapi-test'
 
+num_trials = 10
+for _ in range (num_trials):
+  read_hparams = requests.get (HOST + '/optunapi/hparams/{}' . format (model_name))
+  hp_resp = read_hparams.json()
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
-```
+  trial_id   = hp_resp [ 'trial_id' ]
+  params     = hp_resp [  'params'  ]
+  running_trials = hp_resp [ 'running_trials' ]
 
-```YAML
-questa : è
-una : prova
+  print ( 
+    'Trial {} started with parameters: {}. Total number of running trials: {}.' \
+    . format ( trial_id, params, running_trials )
+        )
+
+  x = params [ 'x' ]
+  y = params [ 'y' ]
+  func = (x - 2) ** 2 + (y - 3) ** 2
+
+  send_score = requests.get (HOST + '/optunapi/score/{}?trial_id={}&score={}' . format (model_name, trial_id, func))
+  score_resp = send_score.json()
+  
+  trial_id    = score_resp [  'trial_id'   ]
+  score       = score_resp [    'score'    ]
+  best_trial  = score_resp [ 'best_trial'  ]
+  best_score  = score_resp [ 'best_score'  ]
+  best_params = score_resp [ 'best_params' ]
+  completed_trials = score_resp [ 'completed_trials' ]
+
+  print (
+    'Trial {} finished with value: {}. Best is trial {} with value: {} and parameters: {}. Total number of completed trials: {}.\n' \
+    . format ( trial_id, score, best_trial, best_score, best_params, completed_trials )
+        )
+
+print ( '\nRESULT AFTER {} TRIALS' . format (completed_trials) )
+print ( '+--------------------------------+' )
+print ( '|           x           : {:.4f} |' . format (best_params['x']) )
+print ( '|           y           : {:.4f} |' . format (best_params['y']) )
+print ( '| (x - 2)^2 + (y - 3)^2 : {:.4f} |' . format (best_score) )
+print ( '+--------------------------------+\n' )
 ```
 
 ## Securing HTTP requests
