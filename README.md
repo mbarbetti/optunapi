@@ -21,19 +21,42 @@ OptunAPI inherits most of the modern functionalities of Optuna and FastAPI:
 - **Easy to integrate**
   - The hyperparameters values can be easily recover [decoding the HTTP response content](#trainer-client) from the server.
 - **Easy parallelization**
-  - Different machines can straightforwardly run the hyperparameters study in parallel, centrally coordinated by the server.
+  - Different machines can run the hyperparameters study in parallel, centrally coordinated by the server.
 - **Efficient optimization algorithms**
-  - Optuna enables efficient hyperparameter optimization by adopting state-of-the-art algorithms for sampling hyperparameters.
+  - The optimization task is headed by Optuna and its state-of-the-art algorithms.
 - **Quick visualization for study analysis**
-  - _TODO_ - OptunAPI provides a set of reports based on `optuna.visualization` to monitor the status of the hyperparameters study.
+  - _TODO_ - OptunAPI provides a set of reports to monitor the status of the hyperparameters study.
 
-## Basic Concepts
+## Key Components
 
-Description of basic concepts.
+To understand how OptunAPI works, we need to spend a couple of words about its components:
 
-- spiegare trial e study
-- descrivere le due funzioni in server.py
-- ask-and-tell interface
+- [`Study`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.Study.html#optuna.study.Study) and
+  [`Trial`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial) objects
+  from Optuna
+- Optuna's _Ask-and-Tell_ interface
+- HTTP requests to map the hyperparameters space
+
+### Study and Trial
+
+A _study_ corresponds to an optimization task, i.e., a set of trials. This object provides interfaces to run a new
+[`Trial`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html#optuna.trial.Trial)
+and access trials' history. OptunAPI is designed so that, when the first machine ask for a hyperparameters set, it
+starts a new study ([`create_study()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.create_study.html#optuna.study.create_study)) identified according to the HTTP request submitted. Any other machines referring 
+to the same optimization session don't initialize a new study, but recover the previous one ([`load_study()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.load_study.html#optuna.study.load_study)) contributing 
+to mapping the hyperparameters space.
+
+---
+
+A trial is a process of evaluating an objective function. This object is passed to an objective function and provides interfaces to get parameter suggestion, manage the trial’s state, and set/get user-defined attributes of the trial.
+
+### Ask-and-Tell Interface
+
+bla bla bla
+
+### HTTP Requests
+
+bla bla bla
 
 ## Requirements
 
@@ -111,7 +134,7 @@ INFO:     Application startup complete.
 
 The command `uvicorn server:optunapi` refers to:
 
-* `server`: the file `server.py` (the Python "module").
+* `server`: the file `server.py` (the Python "module") in [optunapi/optunapi](https://github.com/mbarbetti/optunapi/tree/main/optunapi).
 * `optunapi`: the object created inside of `server.py` with the line `optunapi = FastAPI()`.
 
 </details>
