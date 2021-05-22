@@ -17,16 +17,15 @@ OptunAPI inherits most of the modern functionalities of Optuna and FastAPI:
 - **Lightweight and versatile**
   - OptunAPI is entirely written in Python and has few dependencies.
 - **Easy to configure**
-  - For hyperparameters sampling, OptunAPI relies on configuration files easy
-    to set up ([look at the example](#Example)).
+  - For hyperparameters sampling, OptunAPI relies on [configuration files](#configuration-file) easy to set up.
 - **Easy to integrate**
-  - The sets of hyperparameters under investigation are encoded in HTTP requests
+  - The sets of hyperparameters can be easily recover [decoding the content of the HTTP response](#trainer-client) from the server.
 - **Easy parallelization**
-  - prova
+  - An unlimited number of machines can run the hyperparameters study in parallel, centrally coordinated by the server.
 - **Efficient optimization algorithms**
-  - prova
-- **Quick visualization**
-  - _TODO_ - prova
+  - Optuna enables efficient hyperparameter optimization by adopting state-of-the-art algorithms for sampling hyperparameters.
+- **Quick visualization for study analysis**
+  - _TODO_ - OptunAPI provides a set of reports based on `optuna.visualization` to monitor the status of the hyperparameters study.
 
 ## Basic Concepts
 
