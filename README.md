@@ -112,7 +112,7 @@ equipped with a set of _path operation functions_ relying on the FastAPI ecosyst
   - the _operation_ is `GET`
   - the _function_ allows to start (or load) an Optuna study and send sets of hyperparameters
 - `send_score`
-  - the _path_ is `/optuna/score/{model_name}?trail_id=TRIAL_ID&score=SCORE`
+  - the _path_ is `/optuna/score/{model_name}?trail_id=TRIAL_ID&score=SCORE` (with _query parameters_)
   - the _operation_ is `GET`
   - the _function_ allows to finish the trial identified by `trial_id` with the `score` value
 
@@ -139,7 +139,7 @@ $ git clone https://github.com/mbarbetti/optunapi.git
 
 </div>
 
-To run and use OptunAPI it's preferable to create a virtual environment with Python 3.6+ and install Optuna and FastAPI.
+To run and use OptunAPI it's preferable to create a virtual environment with Python 3.6+ and install within it Optuna and FastAPI.
 
 <div class="termy">
 
@@ -151,9 +151,8 @@ $ pip install optuna fastapi
 
 </div>
 
-Standing on the shoulder of FastAPI, OptunAPI needs an ASGI server to run 
-the so-called Optuna-server, such as [Uvicorn](https://www.uvicorn.org) 
-or [Hypercorn](https://gitlab.com/pgjones/hypercorn).
+Standing on the shoulder of FastAPI, OptunAPI needs an ASGI server to run the so-called Optuna-server, 
+such as [Uvicorn](https://www.uvicorn.org) or [Hypercorn](https://gitlab.com/pgjones/hypercorn).
 
 <div class="termy">
 
@@ -180,59 +179,61 @@ optimizer:
   name    : optimizer
   type    : categorical
   choices : 
-    - RMSprop
-    - Adam
+            - RMSprop
+            - Adam
 
 # Integer parameter
 num_layers:
-  name    : num_layers
-  type    : int
-  low     : 1
-  high    : 3
+  name : num_layers
+  type : int
+  low  : 1
+  high : 3
 
 # Integer parameter (log)
 num_channels:
-  name    : num_channels
-  type    : int
-  low     : 32
-  high    : 52
-  log     : True
+  name : num_channels
+  type : int
+  low  : 32
+  high : 52
+  log  : True
 
 # Integer parameter (discretized)
 num_units:
-  name    : num_units
-  type    : int
-  low     : 10
-  high    : 100
-  step    : 5
+  name : num_units
+  type : int
+  low  : 10
+  high : 100
+  step : 5
 
 # Floating point parameter
 dropout_rate:
-  name    : dropout_rate
-  type    : float
-  low     : 0.0
-  high    : 1.0
+  name : dropout_rate
+  type : float
+  low  : 0.0
+  high : 1.0
 
 # Floating point parameter (log)
 learning_rate:
-  name    : learning_rale
-  type    : float
-  low     : 1e-5
-  high    : 1e-2
-  log     : True
+  name : learning_rale
+  type : float
+  low  : 1e-5
+  high : 1e-2
+  log  : True
 
 # Floating point parameter (discretized)
 drop_path_rate:
-  name    : drop_path_rate
-  type    : float
-  low     : 0.0
-  high    : 1.0
-  step    : 0.1
+  name : drop_path_rate
+  type : float
+  low  : 0.0
+  high : 1.0
+  step : 0.1
 ```
 
 ### Optuna-server
 
-Run the server with:
+Prepared the configuration file for the optimization session and saved it into 
+[`optunapi/optunapi/config`](https://github.com/mbarbetti/optunapi/tree/main/optunapi/config),
+we are ready to run the Optuna-server.
 
 <div class="termy">
 
@@ -253,10 +254,15 @@ INFO:     Application startup complete.
 
 The command `uvicorn server:optunapi` refers to:
 
-* `server`: the file `server.py` (the Python "module") in [optunapi/optunapi](https://github.com/mbarbetti/optunapi/tree/main/optunapi).
+* `server`: the file `server.py` (the Python "module") in 
+  [optunapi/optunapi](https://github.com/mbarbetti/optunapi/tree/main/optunapi).
 * `optunapi`: the object created inside of `server.py` with the line `optunapi = FastAPI()`.
 
 </details>
+
+Note that Uvicorn set `127.0.0.1` and `8000` as default values for the server IP and port.
+To change the defaults it's enough launching the previous command with the arguments 
+`--host` and `--port` followed by the chosen values.
 
 ### Trainer-client
 
@@ -265,51 +271,18 @@ This is a simple example:
 ```Python
 import requests
 
-
-HOST = 'http://127.0.0.1:8000'
-model_name = 'optunapi-test'
-
-num_trials = 10
-for _ in range (num_trials):
-  read_hparams = requests.get (HOST + '/optunapi/hparams/{}' . format (model_name))
-  hp_resp = read_hparams.json()
-
-  trial_id   = hp_resp [ 'trial_id' ]
-  params     = hp_resp [  'params'  ]
-  running_trials = hp_resp [ 'running_trials' ]
-
-  print ( 
-    'Trial {} started with parameters: {}. Total number of running trials: {}.' \
-    . format ( trial_id, params, running_trials )
-        )
-
-  x = params [ 'x' ]
-  y = params [ 'y' ]
-  func = (x - 2) ** 2 + (y - 3) ** 2
-
-  send_score = requests.get (HOST + '/optunapi/score/{}?trial_id={}&score={}' . format (model_name, trial_id, func))
-  score_resp = send_score.json()
-  
-  trial_id    = score_resp [  'trial_id'   ]
-  score       = score_resp [    'score'    ]
-  best_trial  = score_resp [ 'best_trial'  ]
-  best_score  = score_resp [ 'best_score'  ]
-  best_params = score_resp [ 'best_params' ]
-  completed_trials = score_resp [ 'completed_trials' ]
-
-  print (
-    'Trial {} finished with value: {}. Best is trial {} with value: {} and parameters: {}. Total number of completed trials: {}.\n' \
-    . format ( trial_id, score, best_trial, best_score, best_params, completed_trials )
-        )
-
-print ( '\nRESULT AFTER {} TRIALS' . format (completed_trials) )
-print ( '+--------------------------------+' )
-print ( '|           x           : {:.4f} |' . format (best_params['x']) )
-print ( '|           y           : {:.4f} |' . format (best_params['y']) )
-print ( '| (x - 2)^2 + (y - 3)^2 : {:.4f} |' . format (best_score) )
-print ( '+--------------------------------+\n' )
+read_hparams = requests.get ('http://127.0.0.1:8000/optunapi/hparams/optunapi-test')
+http_request = read_hparams.json()
 ```
 
+bla bla bla
+
+```Python
+import requests
+
+send_score = requests.get ('http://127.0.0.1:8000/optunapi/score/optunapi-test?trial_id=TRIAL_ID&score=SCORE')
+http_request = send_score.json()
+```
 ## Securing HTTP requests
 
 ## License
