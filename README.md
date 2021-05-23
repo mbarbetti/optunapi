@@ -139,7 +139,7 @@ $ git clone https://github.com/mbarbetti/optunapi.git
 
 </div>
 
-To run and use OptunAPI we should create a virtual environment with Python 3.6+ and install Optuna and FastAPI.
+To run and use OptunAPI it's preferable to create a virtual environment with Python 3.6+ and install Optuna and FastAPI.
 
 <div class="termy">
 
@@ -169,24 +169,65 @@ $ pip install uvicorn[standard]
 
 ### Configuration file
 
-```YAML
-x :
-  name    : x
-  type    : float
-  choices : 
-  low     : -10
-  high    :  10
-  step    :
-  log     : False
+The high-level functions provided by Optuna [to suggest values for the hyperparameters](#study-and-trial) 
+are replaced with an appropriate _configuration file_ in OptunAPI. Referring to the example reported in
+the [Optuna tutorial](https://optuna.readthedocs.io/en/stable/tutorial/10_key_features/002_configurations.html),
+what follows is the corresponding YAML configuration file:
 
-y :
-  name    : y
+```YAML
+# Categorical parameter
+optimizer:
+  name    : optimizer
+  type    : categorical
+  choices : 
+    - RMSprop
+    - Adam
+
+# Integer parameter
+num_layers:
+  name    : num_layers
+  type    : int
+  low     : 1
+  high    : 3
+
+# Integer parameter (log)
+num_channels:
+  name    : num_channels
+  type    : int
+  low     : 32
+  high    : 52
+  log     : True
+
+# Integer parameter (discretized)
+num_units:
+  name    : num_units
+  type    : int
+  low     : 10
+  high    : 100
+  step    : 5
+
+# Floating point parameter
+dropout_rate:
+  name    : dropout_rate
   type    : float
-  choices :
-  low     : -10
-  high    :  10
-  step    :
-  log     : False
+  low     : 0.0
+  high    : 1.0
+
+# Floating point parameter (log)
+learning_rate:
+  name    : learning_rale
+  type    : float
+  low     : 1e-5
+  high    : 1e-2
+  log     : True
+
+# Floating point parameter (discretized)
+drop_path_rate:
+  name    : drop_path_rate
+  type    : float
+  low     : 0.0
+  high    : 1.0
+  step    : 0.1
 ```
 
 ### Optuna-server
