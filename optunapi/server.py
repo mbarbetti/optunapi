@@ -60,10 +60,10 @@ async def read_hparams (model_name: str):
         - `running_trials` > Number of running trials
         - `completed_trials` > Number of completed trials
   """
-  study_name = os.path.join (PATH, 'db', model_name)
-  storage_name = 'sqlite:///{}.db' . format (study_name)
+  storage_dir  = os.path.join (PATH, 'db')
+  storage_name = 'sqlite:///{}/{}.db' . format (storage_dir, model_name)
   study = optuna.create_study ( 
-                                study_name = study_name ,
+                                study_name = model_name ,
                                 storage = storage_name  ,
                                 load_if_exists = True   ,
                               )
@@ -142,10 +142,10 @@ async def send_score (
         - `running_trials` > Number of running trials
         - `completed_trials` > Number of completed trials
   """
-  study_name = os.path.join (PATH, 'db', model_name)
-  storage_name = 'sqlite:///{}.db' . format (study_name)
+  storage_dir  = os.path.join (PATH, 'db')
+  storage_name = 'sqlite:///{}/{}.db' . format (storage_dir, model_name)
   study = optuna.create_study ( 
-                                study_name = study_name,
+                                study_name = model_name,
                                 storage = storage_name,
                                 load_if_exists = True
                               )
