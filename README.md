@@ -139,7 +139,7 @@ $ git clone https://github.com/mbarbetti/optunapi.git
 
 </div>
 
-To run and use OptunAPI it's preferable to create a virtual environment with Python 3.6+ and install within it Optuna and FastAPI.
+To run and use OptunAPI it's preferable to create a virtual environment with Python 3.6+ and install Optuna and FastAPI within it.
 
 <div class="termy">
 
@@ -260,29 +260,47 @@ The command `uvicorn server:optunapi` refers to:
 
 </details>
 
-Note that Uvicorn set `127.0.0.1` and `8000` as default values for the server IP and port.
+Note that Uvicorn sets `127.0.0.1` and `8000` as default values for the server IP and port.
 To change the defaults it's enough launching the previous command with the arguments 
 `--host` and `--port` followed by the chosen values.
 
 ### Trainer-client
 
-This is a simple example:
+The optimization session is managed by an Optuna _study_, initialized with the first client HTTP request, 
+or loaded and expanded by any other connecting machines. To refer to a particular optimization session a 
+client has to encode the name of the corresponding configuration file within its HTTP request.
+
+Consider the simple use-case provided by OptunAPI where we want to find the minimum of a paraboloid with
+vertex in $(2, 3)$: [`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
+Since the provided configuration file is named `optuna-test.yaml`, then the GET request submitted by the 
+client to receive the hyperparameters set has to contain `optuna-test`:
 
 ```Python
 import requests
 
-read_hparams = requests.get ('http://127.0.0.1:8000/optunapi/hparams/optunapi-test')
-http_request = read_hparams.json()
+HOST = 'http://127.0.0.1:8000'
+
+read_hparams = requests.get (HOST + '/optunapi/hparams/optunapi-test')
+hp_req = read_hparams.json()
 ```
 
-bla bla bla
+What happens behind the scenes is that the HTTP request submitted by the client calls an _ask_ instance 
+to the Optuna study. Therefore `hp_req` contains a set of hyperparameters values and an identifier for
+the deriving trial (`trial_id`).
+
+discorso sul training e sullo score ottenuto
 
 ```Python
 import requests
 
-send_score = requests.get ('http://127.0.0.1:8000/optunapi/score/optunapi-test?trial_id=TRIAL_ID&score=SCORE')
-http_request = send_score.json()
+HOST = 'http://127.0.0.1:8000'
+
+send_score = requests.get (HOST + '/optunapi/score/optunapi-test?trial_id=TRIAL_ID&score=SCORE')
+score_req  = send_score.json()
 ```
+
+puzzle piece for hyperparameters space
+
 ## Securing HTTP requests
 
 ## License
