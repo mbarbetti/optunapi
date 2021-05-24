@@ -250,7 +250,7 @@ INFO:     Application startup complete.
 </div>
 
 <details markdown="1">
-<summary>About the command <code>uvicorn server:optunapi</code>...</summary>
+<summary>What does the command <code>uvicorn server:optunapi</code> mean?</summary>
 
 The command `uvicorn server:optunapi` refers to:
 
@@ -322,7 +322,7 @@ on-premises machines to instances deriving from different cloud computing servic
 Such design raises a security issue since anyone can submit a request to the server or catch its response, 
 opening the system to cyberattack.
 
-A possible solution to this issue relies on the _SSH protocol_. The idea is to set up the Optuna-server
+A possible solution to this issue relies on the SSH protocol. The idea is to set up the Optuna-server
 as a _private server_ (from the perspective of `REMOTE SERVER`) not directly visible from the outside 
 (`LOCAL CLIENT`’s perspective). This configuration, schematically represented in the sketch below, 
 allows a _local client_ to still access the _private server_ passing through the _remote server_ 
