@@ -270,10 +270,10 @@ The optimization session is managed by an Optuna _study_, initialized with the f
 or loaded and expanded by any other connecting machines. To refer to a particular optimization session a 
 client has to encode the name of the corresponding configuration file within its HTTP request.
 
-Consider the simple use-case provided by OptunAPI where we want to find the minimum of a 2D-paraboloid with
-vertex in \\(2, 3)\\: [`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
-Since the provided configuration file is named `optuna-test.yaml`, then the GET request submitted by the 
-client to receive the hyperparameters set has to contain the string `'optuna-test'`:
+Consider the simple use-case provided by OptunAPI, where we want to find the minimum of a 2D-paraboloid:
+[`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
+Since the provided configuration file is named `optuna-test.yaml`, then the GET request submitted by the client 
+to receive the hyperparameters set has to contain the string `'optuna-test'`:
 
 ```Python
 import requests
@@ -287,17 +287,17 @@ TRIAL_ID = hp_req ['trial_id']
 PARAMS   = hp_req [ 'params' ]
 ```
 
-What happens behind the scenes is that the above HTTP request calls an _ask_ instance to the Optuna _study_,
-stored in [`optunapi/optunapi/db`](https://github.com/mbarbetti/optunapi/tree/main/optunapi/db) once created
-and named `optunapi-test.db`. As already said, an _ask_ instance is a _trial_ equipped with a set of
-hyperparameters and the client can recover those values decoding the HTTP response. In the example above,
-`hp_req` is a dictionary containing, among others, the identifier number of the current _trial_ (`TRIAL_ID`)
-and a dictionary for the hyperparameters values (`PARAMS`). 
+What happens behind the scenes is that the above HTTP request calls an _ask_ instance to the Optuna 
+_study_, stored in [`optunapi/optunapi/db`](https://github.com/mbarbetti/optunapi/tree/main/optunapi/db) 
+once created and named `optunapi-test.db`. As already said, an _ask_ instance is a _trial_ equipped with 
+a set of hyperparameters and the client can recover those values decoding the corresponding HTTP response. 
+In the example above, `hp_req` is a dictionary containing, among others, the identifier number of the current 
+_trial_ (`TRIAL_ID`) and a dictionary for the hyperparameters values (`PARAMS`). 
 
 Having accessed to the hyperparameters values, we can perform whatever learning algorithm one prefers and 
 evaluate the associated training score, that will be used as _objective value_ to finish the _trial_ instance.
 This is done with a new GET request referring to the same optimization session (again, `'optunapi-test'` in the path) 
-and passing `TRIAL_ID` and `SCORE` as query parameters of that request:
+and passing `TRIAL_ID` and `SCORE` as query parameters:
 
 ```Python
 import requests
@@ -315,6 +315,64 @@ Each running client allows to refine the search for minima performed by the Optu
 on smaller and smaller space portion and enhancing the mapping of the hyperparameters space.
 
 ## Securing HTTP requests
+
+OptunAPI is designed to be used within a VPN not directly opened to the public Internet. On the other hand, 
+opening the Optuna-server to Internet allows to exploit easily a wide variety of computing resources, from 
+on-premises machines to instances deriving from different cloud computing services (AWS, Azure, GCP, etc.).
+Such design raises a security issue since anyone can submit a request to the server or catch its response, 
+opening the system to cyberattack.
+
+A possible solution to this issue relies on the _SSH protocol_. The idea is to set up the Optuna-server
+as a _private server_ (from the perspective of `REMOTE SERVER`) not directly visible from the outside 
+(`LOCAL CLIENT`’s perspective). This configuration, schematically represented in the sketch below, 
+allows a _local client_ to still access the _private server_ passing through the _remote server_ 
+authenticating with SSH credentials. 
+
+```
+    ----------------------------------------------------------------------
+
+                                |
+    -------------+              |    +----------+               +---------
+        LOCAL    |              |    |  REMOTE  |               | PRIVATE
+        CLIENT   | <== SSH ========> |  SERVER  | <== local ==> | SERVER
+    -------------+              |    +----------+               +---------
+                                |
+                             FIREWALL (only port 22 is open)
+
+    ----------------------------------------------------------------------
+```
+
+OptunAPI provides a very simple implementation of this scheme: 
+[`optunapi/tests/secured_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/secured_client.py).
+It is based on [sshtunnel](https://github.com/pahaz/sshtunnel/) and allows to submit a HTTP request to the
+_private server_ after having specifying our SSH credentials (`ssh_username`, `ssh_pkey`).
+
+```Python
+import sshtunnel
+import requests
+
+with sshtunnel.open_tunnel (
+  (REMOTE_SERVER_IP, 22),
+  ssh_username = 'mbarbetti',
+  ssh_pkey = '/home/mbarbetti/.ssh/id_rsa',
+  remote_bind_address = (PRIVATE_SERVER_IP, PRIVATE_SERVER_PORT),
+  local_bind_address  = ('127.0.0.1', 10022)
+) as tunnel:
+  ping_server = requests.get ('http://localhost:10022/optunapi/ping')
+  ping_msg = ping_server.json()
+  print (ping_msg)
+```
+
+<details markdown="1">
+<summary>How to run the server in this case?</summary>
+
+In this configuration the Optuna-server acts as _private server_, 
+then its IP and port are the ones declared within the `with` statement:
+
+```
+$ uvicorn server:optunapi --host PRIVATE_SERVER_IP --port PRIVATE_SERVER_PORT
+```
+</details>
 
 ## License
 
