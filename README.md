@@ -271,9 +271,9 @@ or loaded and expanded by any other connecting machines. To refer to a particula
 client has to encode the name of the corresponding configuration file within its HTTP request.
 
 Consider the simple use-case provided by OptunAPI where we want to find the minimum of a paraboloid with
-vertex in $(2, 3)$: [`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
+vertex in \\(2, 3)\\: [`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
 Since the provided configuration file is named `optuna-test.yaml`, then the GET request submitted by the 
-client to receive the hyperparameters set has to contain `optuna-test`:
+client to receive the hyperparameters set has to contain the string `'optuna-test'`:
 
 ```Python
 import requests
@@ -282,13 +282,22 @@ HOST = 'http://127.0.0.1:8000'
 
 read_hparams = requests.get (HOST + '/optunapi/hparams/optunapi-test')
 hp_req = read_hparams.json()
+
+TRIAL_ID = hp_req ['trial_id']
+PARAMS   = hp_req [ 'params' ]
 ```
 
-What happens behind the scenes is that the HTTP request submitted by the client calls an _ask_ instance 
-to the Optuna study. Therefore `hp_req` contains a set of hyperparameters values and an identifier for
-the deriving trial (`trial_id`).
+What happens behind the scenes is that the above HTTP request calls an _ask_ instance to the Optuna _study_,
+stored in [`optunapi/optunapi/db`](https://github.com/mbarbetti/optunapi/tree/main/optunapi/db) once created
+and named `optunapi-test.db`. As already said, an _ask_ instance is a _trial_ equipped with a set of
+hyperparameters and the client can recover those values decoding the HTTP response. In the example above,
+`hp_req` is a dictionary containing, among others, the identifier number of the current _trial_ (`TRIAL_ID`)
+and a dictionary for the hyperparameters values (`PARAMS`). 
 
-discorso sul training e sullo score ottenuto
+Having accessed to the hyperparameters values, we can perform whatever learning algorithm one prefers and 
+evaluate the associated training score, that will be used as _objective value_ to finish the _trial_ instance.
+This is done with a new GET request referring to the same optimization session (again, `'optunapi-test'` in the path) 
+and passing `TRIAL_ID` and `SCORE` as query parameters of that request.
 
 ```Python
 import requests
@@ -297,6 +306,9 @@ HOST = 'http://127.0.0.1:8000'
 
 send_score = requests.get (HOST + '/optunapi/score/optunapi-test?trial_id=TRIAL_ID&score=SCORE')
 score_req  = send_score.json()
+
+BEST_TRIAL_ID = score_req ['best_score_id']
+BEST_PARAMS   = score_req [ 'best_params' ]
 ```
 
 puzzle piece for hyperparameters space
