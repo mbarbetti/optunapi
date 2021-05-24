@@ -9,6 +9,6 @@ with sshtunnel.open_tunnel (
   remote_bind_address = (PRIVATE_SERVER_IP, PRIVATE_SERVER_PORT),
   local_bind_address  = ('127.0.0.1', 10022)
 ) as tunnel:
-  ping = requests.get ('http://localhost:10022/optunapi/ping')
-  ping_msg = ping.json()
+  ping_server = requests.get ('http://localhost:10022/optunapi/ping')
+  ping_msg = ping_server.json()
   print (ping_msg)
