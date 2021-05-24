@@ -270,7 +270,7 @@ The optimization session is managed by an Optuna _study_, initialized with the f
 or loaded and expanded by any other connecting machines. To refer to a particular optimization session a 
 client has to encode the name of the corresponding configuration file within its HTTP request.
 
-Consider the simple use-case provided by OptunAPI where we want to find the minimum of a paraboloid with
+Consider the simple use-case provided by OptunAPI where we want to find the minimum of a 2D-paraboloid with
 vertex in \\(2, 3)\\: [`optunapi/tests/simple_client.py`](https://github.com/mbarbetti/optunapi/blob/main/tests/simple_client.py).
 Since the provided configuration file is named `optuna-test.yaml`, then the GET request submitted by the 
 client to receive the hyperparameters set has to contain the string `'optuna-test'`:
@@ -297,7 +297,7 @@ and a dictionary for the hyperparameters values (`PARAMS`).
 Having accessed to the hyperparameters values, we can perform whatever learning algorithm one prefers and 
 evaluate the associated training score, that will be used as _objective value_ to finish the _trial_ instance.
 This is done with a new GET request referring to the same optimization session (again, `'optunapi-test'` in the path) 
-and passing `TRIAL_ID` and `SCORE` as query parameters of that request.
+and passing `TRIAL_ID` and `SCORE` as query parameters of that request:
 
 ```Python
 import requests
@@ -311,7 +311,8 @@ BEST_TRIAL_ID = score_req ['best_score_id']
 BEST_PARAMS   = score_req [ 'best_params' ]
 ```
 
-puzzle piece for hyperparameters space
+Each running client allows to refine the search for minima performed by the Optuna algorithms, focusing 
+on smaller and smaller space portion and enhancing the mapping of the hyperparameters space.
 
 ## Securing HTTP requests
 
