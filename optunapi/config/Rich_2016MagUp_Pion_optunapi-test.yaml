@@ -1,0 +1,17 @@
+learning_rate:
+  name    : learning_rate
+  type    : float
+  choices : 
+  low     : 1e-6
+  high    : 1e-4
+  step    :
+  log     : True
+
+batch_size:
+  name    : batch_size
+  type    : int
+  choices : 
+  low     : 1
+  high    : 2500
+  step    :
+  log     : True
