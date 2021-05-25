@@ -22,9 +22,11 @@ setup (
         install_requires = [
                              'optuna',
                              'fastapi',
+                             'requests',
+                             'uvicorn[standard]',
                            ],
         classifiers = [
-                        'Development Status :: 4 - Beta',
+                        'Development Status :: 3 - Alpha',
                         'Intended Audience :: Science/Research',
                         'Intended Audience :: Developers',
                         'License :: OSI Approved :: MIT License',

@@ -64,7 +64,7 @@ async def read_hparams (model_name: str):
   storage_name = 'sqlite:///{}/{}.db' . format (storage_dir, model_name)
   study = optuna.create_study ( 
                                 study_name = model_name ,
-                                storage = storage_name  ,
+                                storage  = storage_name ,
                                 load_if_exists = True   ,
                               )
   
@@ -145,9 +145,9 @@ async def send_score (
   storage_dir  = os.path.join (PATH, 'db')
   storage_name = 'sqlite:///{}/{}.db' . format (storage_dir, model_name)
   study = optuna.create_study ( 
-                                study_name = model_name,
-                                storage = storage_name,
-                                load_if_exists = True
+                                study_name = model_name ,
+                                storage  = storage_name ,
+                                load_if_exists = True   ,
                               )
 
   study.tell (trial_id, score)
