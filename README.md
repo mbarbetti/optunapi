@@ -1,6 +1,8 @@
 [![PyPI license](https://img.shields.io/pypi/l/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
+[![GitHub issues](https://img.shields.io/github/issues/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/issues/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/pulls/)
 [![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
 [![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
 
