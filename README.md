@@ -1,3 +1,5 @@
+[![wakatime](https://wakatime.com/badge/github/mbarbetti/optunapi.svg)](https://wakatime.com/badge/github/mbarbetti/optunapi)
+
 # OptunAPI
 
 OptunAPI is a simple API designed for Machine Learning applications that allows to distribute an automatic 
