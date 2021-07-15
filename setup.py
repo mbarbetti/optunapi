@@ -2,7 +2,7 @@ import io
 import os
 PATH = os.path.abspath (os.path.dirname (__file__))
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 with io.open (os.path.join (PATH, 'README.md'), encoding = 'utf-8') as f:

@@ -103,9 +103,9 @@ async def read_hparams (model_name: str):
 
 @optunapi.get ('/optunapi/score/{model_name}')
 async def send_score (
-                       model_name : str            ,
-                       trial_id   : int            ,
-                       score      : float          ,
+                       model_name : str   ,
+                       trial_id   : int   ,
+                       score      : float ,
                      ):
   """
   Send Score
