@@ -1,3 +1,11 @@
+<div align="center">
+  <img src="https://github.com/mbarbetti/optunapi/tree/new_design/docs/img/optunapi-logo.png" width="800"/>
+</div>
+
+<p align="center">
+  <em>API to distribute hyperparameters optimization through HTTP requests</em>
+</p>
+
 [![PyPI license](https://img.shields.io/pypi/l/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI status](https://img.shields.io/pypi/status/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
@@ -7,7 +15,7 @@
 [![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
 [![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
 
-# OptunAPI
+---
 
 OptunAPI is a simple API designed for Machine Learning applications that allows to distribute an automatic 
 hyperparameters optimization over different machines through _HTTP requests_. Each set of hyperparameters 
