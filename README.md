@@ -1,3 +1,11 @@
+<div align="center">
+  <img src="https://github.com/mbarbetti/optunapi/blob/main/docs/img/optunapi-logo.png" width="400"/>
+</div>
+
+<p align="center">
+  <em>API to distribute hyperparameters optimization through HTTP requests</em>
+</p>
+
 [![PyPI license](https://img.shields.io/pypi/l/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI status](https://img.shields.io/pypi/status/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
@@ -7,12 +15,10 @@
 [![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
 [![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
 
-# OptunAPI
-
-OptunAPI is a simple API designed for Machine Learning applications that allows to distribute an automatic 
-hyperparameters optimization over different machines through _HTTP requests_. Each set of hyperparameters 
+_OptunAPI_ is a simple API designed for Machine Learning applications that allows to distribute an automatic 
+hyperparameters optimization over different machines through **HTTP requests**. Each set of hyperparameters 
 can be studied independently since the minima research does't require any gradients computation, but instead 
-is performed through a _Bayesian optimization_ based on [Optuna](https://optuna.org/). The machine running 
+is performed through a **Bayesian optimization** based on [Optuna](https://optuna.org/). The machine running 
 Optuna manages centrally the optimization studies -- the so-called "Optuna-server" -- providing sets of 
 hyperparameters and assessing them by the scores evaluated and sent back by the single computing instance, 
 named "Trainer-client". The HTTP requests underlying such client-server system are powered by [FastAPI](https://fastapi.tiangolo.com).
