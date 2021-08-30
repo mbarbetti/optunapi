@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/mbarbetti/optunapi/blob/new_design/docs/img/optunapi-logo.png" width="500"/>
+  <img src="https://github.com/mbarbetti/optunapi/blob/new_design/docs/img/optunapi-logo.png" width="400"/>
 </div>
 
 <p align="center">
@@ -14,8 +14,6 @@
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/pulls/)
 [![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
 [![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
-
----
 
 OptunAPI is a simple API designed for Machine Learning applications that allows to distribute an automatic 
 hyperparameters optimization over different machines through _HTTP requests_. Each set of hyperparameters 
