@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/mbarbetti/optunapi/blob/main/docs/img/optunapi-logo.png" width="400"/>
+  <img src="https://raw.githubusercontent.com/mbarbetti/optunapi/main/.github/images/optunapi-logo.png" width="400"/>
 </div>
 
 <p align="center">
@@ -10,8 +10,10 @@
 [![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI status](https://img.shields.io/pypi/status/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
-[![DOI](https://zenodo.org/badge/357996871.svg)](https://zenodo.org/badge/latestdoi/357996871)
+[![GitHub issues](https://img.shields.io/github/issues/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/issues/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/pulls/)
 [![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
+[![DOI](https://zenodo.org/badge/357996871.svg)](https://zenodo.org/badge/latestdoi/357996871)
 [![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
 
 _OptunAPI_ is a simple API designed for Machine Learning applications that allows to distribute an automatic 
