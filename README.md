@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/mbarbetti/optunapi/main/.github/images/optunapi-logo.png" width="400"/>
+  <img src="https://raw.githubusercontent.com/mbarbetti/optunapi/main/.github/images/optunapi-logo-github.png" width="400"/>
 </div>
 
 <p align="center">
