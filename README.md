@@ -2,7 +2,9 @@
   <img src="https://raw.githubusercontent.com/mbarbetti/optunapi/main/.github/images/optunapi-logo.png" width="800"/>
 </div>
 
-# OptunAPI: API to distribute hyperparameters optimization through HTTP requests
+<p align="center">
+  <em>API to distribute hyperparameters optimization through HTTP requests</em>
+</p>
 
 [![PyPI license](https://img.shields.io/pypi/l/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
