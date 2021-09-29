@@ -10,7 +10,7 @@ with io.open (os.path.join (PATH, 'README.md'), encoding = 'utf-8') as f:
 
 setup (
         name = 'optunapi',
-        version = '0.1.0',
+        version = '0.1.1',
         author  = 'Matteo Barbetti',
         author_email = 'matteo.barbetti@fi.infn.it',
         description  = 'API to distribute hyperparameters optimization through HTTP requests',
