@@ -1,6 +1,8 @@
 import os
+import base64
 PATH = os.path.abspath (os.path.dirname (__file__))
 
+import numpy as np
 from fastapi import FastAPI
 optunapi = FastAPI()
 
@@ -9,6 +11,9 @@ from optuna.trial._state import TrialState
 
 from typing import Optional
 from utils  import suggest_from_config, create_log_file
+
+import io
+import pickle
 
 
 @optunapi.get ('/optunapi/ping')
@@ -185,3 +190,55 @@ async def send_score (
 
   return response
   
+
+@optunapi.get ('/optunapi/storage/function/{function_name}')
+async def mockup (
+                       function_name : str   ,
+                       args          : str   ,
+                       kwargs        : str ,
+                     ):
+
+    if 'getdoc' in function_name:
+        return "Non rompere il cazzo"
+
+    f = io.BytesIO()
+    args = pickle.load (io.BytesIO(base64.b32decode(args)))
+    kwargs = pickle.load (io.BytesIO(base64.b32decode(kwargs)))
+
+    ret = np
+    for attr in function_name.split('.'):
+        ret = getattr(ret, attr) 
+
+    ret = ret(*args, **kwargs)
+
+    pickle.dump (ret, f)
+    string = str(base64.b32encode (f.getbuffer()), 'ascii')
+
+    return dict (value=string)
+
+
+
+@optunapi.get ('/optunapi/storage/string/{function_name}')
+async def mockup (
+                       function_name : str   ,
+                     ):
+
+    if 'getdoc' in function_name:
+        return "Non rompere il cazzo"
+
+    ret = np
+    for attr in function_name.split('.'):
+        print (attr)
+        ret = getattr(ret, attr) 
+
+    ret = str(ret)
+
+    f = io.BytesIO()
+    pickle.dump (np.asarray(ret), f)
+    string = str(base64.b32encode (f.getbuffer()), 'ascii')
+
+    return dict (value=string)
+
+
+
+
