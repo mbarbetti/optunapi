@@ -11,8 +11,10 @@
   <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/optunapi"></a>
   <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Status" src="https://img.shields.io/pypi/status/optunapi"></a>
   <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/optunapi.svg"></a>
+  <!--
   <a href="https://github.com/mbarbetti/optunapi/issues"><img alt="GitHub - Issues" src="https://img.shields.io/github/issues/mbarbetti/optunapi"></a>
   <a href="https://github.com/mbarbetti/optunapi/pulls"><img alt="GitHub - Pull-requests" src="https://img.shields.io/github/issues-pr/mbarbetti/optunapi"></a>
+  -->
   <a href="https://github.com/mbarbetti/optunapi/network/members"><img alt="GitHub - Forks" src="https://badgen.net/github/forks/mbarbetti/optunapi"></a>
   <a href="https://github.com/mbarbetti/optunapi/stargazers/"><img alt="GitHub - Stars" src="https://img.shields.io/github/stars/mbarbetti/optunapi"></a>
   <a href="https://zenodo.org/badge/latestdoi/357996871"><img alt="DOI" src="https://zenodo.org/badge/357996871.svg"></a>
