@@ -6,15 +6,17 @@
   <em>API to distribute hyperparameters optimization through HTTP requests</em>
 </h3>
 
-[![PyPI license](https://img.shields.io/pypi/l/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
-[![PyPI version shields.io](https://img.shields.io/pypi/v/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
-[![PyPI status](https://img.shields.io/pypi/status/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/optunapi.svg)](https://pypi.python.org/pypi/optunapi/)
-[![GitHub issues](https://img.shields.io/github/issues/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/issues/)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/mbarbetti/optunapi.svg)](https://github.com/mbarbetti/optunapi/pulls/)
-[![Downloads](https://pepy.tech/badge/optunapi)](https://pepy.tech/project/optunapi)
-[![DOI](https://zenodo.org/badge/357996871.svg)](https://zenodo.org/badge/latestdoi/357996871)
-[![GitHub stars](https://img.shields.io/github/stars/mbarbetti/optunapi?style=social)](https://github.com/mbarbetti/optunapi)
+<p align="center">
+  <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Python versions" src="https://img.shields.io/pypi/pyversions/optunapi"></a>
+  <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/optunapi"></a>
+  <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Status" src="https://img.shields.io/pypi/status/optunapi"></a>
+  <a href="https://pypi.python.org/pypi/optunapi/"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/optunapi.svg"></a>
+  <a href="https://github.com/mbarbetti/optunapi/issues"><img alt="GitHub - Issues" src="https://img.shields.io/github/issues/mbarbetti/optunapi"></a>
+  <a href="https://github.com/mbarbetti/optunapi/pulls"><img alt="GitHub - Pull-requests" src="https://img.shields.io/github/issues-pr/mbarbetti/optunapi"></a>
+  <a href="https://github.com/mbarbetti/optunapi/network/members"><img alt="GitHub - Forks" src="https://badgen.net/github/forks/mbarbetti/optunapi"></a>
+  <a href="https://github.com/mbarbetti/optunapi/stargazers/"><img alt="GitHub - Stars" src="https://img.shields.io/github/stars/mbarbetti/optunapi"></a>
+  <a href="https://zenodo.org/badge/latestdoi/357996871"><img alt="DOI" src="https://zenodo.org/badge/357996871.svg"></a>
+</p>
 
 _OptunAPI_ is a simple API designed for Machine Learning applications that allows to distribute an automatic 
 hyperparameters optimization over different machines through **HTTP requests**. Each set of hyperparameters 
